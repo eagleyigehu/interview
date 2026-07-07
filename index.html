@@ -91,62 +91,76 @@
 // 行格式: [英文, 中文]  ""=空行
 const DATA = [
  {part:"开场与核心"},
- {id:"1", key:"自我介绍", pts:[1], blocks:[
+{id:"1", key:"自我介绍/为什么这个项目/是你", pts:[1], blocks:[
   ["say","说的一半(一定说)",[
-   ["Hi Rachel, thanks so much for having me.","Hi Rachel,非常感谢你们邀请我。"],
-   ["I'm Emma —","我是 Emma——"],
-   ["an artist, studying Illustration at UAL,","一名艺术家,在 UAL 读插画,"],
-   ["and biology at RMIT.","同时在 RMIT 读生物。"],
-   ["My background is a mix of art,","我的背景是艺术、"],
-   ["wildlife fieldwork, and public engagement.","野外生态工作和公众参与的结合。"],
+   ["Hi Rachel, thanks so much for having me.","Hi Rachel，非常感谢你们邀请我。"],
+   ["I'm Emma.","我是 Emma。"],
+   ["I'm studying Illustration at UAL,","我在 UAL 学插画，"],
+   ["and biology at RMIT.","也在 RMIT 学生物。"],
+   ["My background is really a combination of art,","我的背景其实就是艺术、"],
+   ["ecological fieldwork,","生态野外工作，"],
+   ["and public engagement.","以及公众参与的结合。"],
    "",
-   ["Over the past year,","过去一年里,"],
-   ["I've spent as much time in the field","我在野外的时间"],
-   ["as in the studio.","和在工作室里一样多。"],
-   ["So I really enjoy sitting between those two worlds.","所以我很享受站在这两个世界之间。"],
-   ["That's why this commission felt like such a good fit.","这也是这个委托让我觉得特别合适的原因。"],
+   ["Over the past year,","过去这一年，"],
+   ["I've probably spent as much time outdoors","我在野外待的时间，"],
+   ["as I have in the studio.","差不多和待在工作室一样多。"],
+   ["I really enjoy working between those two worlds,","我很喜欢在这两个世界之间工作，"],
+   ["turning science into something people can actually connect with.","把科学变成大家真正能产生连接的内容。"],
+   ["That's why this project immediately stood out to me.","所以这个项目一下子就吸引了我。"],
    "",
-   ["Happy to give examples —","我可以举例子——"],
-   ["from the fieldwork, or the community projects —","野外的,或者社区项目的——"],
-   ["whichever's more useful.","看哪个对你们更有用。"]]],
+   ["Happy to give examples","如果有帮助的话，"],
+   ["either from my fieldwork","我可以分享野外工作的例子，"],
+   ["or from the community projects I've organised.","或者我组织社区项目的经历。"]
+  ]],
+
   ["backup","后手:具体野外清单",[
-   ["Nightly penguin counts — with Earthcare, in St Kilda.","夜间小企鹅计数——在圣基尔达,跟 Earthcare。"],
-   ["Seagrass and fish surveys — in Victoria.","海草和鱼类调查——在维多利亚州。"],
-   ["And a wading-bird campaign with the RSPB.","还有和 RSPB 做的涉禽宣传活动。"],
-   ["None of these were part of my degree.","这些都不是学位要求的。"],
-   ["I went looking for them —","是我自己找来做的——"],
-   ["because it's the work I actually want to do.","因为这就是我真正想做的工作。"]]]
- ]},
- {id:"2", key:"为什么这个项目/是你", pts:[1,3], blocks:[
-  ["say","说的一半(一定说)",[
-   ["Two things attracted me, really.","真正吸引我的有两点。"],
+   ["I've done nightly penguin counts with Earthcare in St Kilda,","我参加过 St Kilda 和 Earthcare 的夜间企鹅调查，"],
+   ["seagrass and fish surveys across Victoria,","也做过维州的海草和鱼类调查，"],
+   ["and a wading bird campaign with the RSPB.","还参与过 RSPB 的涉禽宣传项目。"],
+   ["None of those were required by my course.","这些都不是课程要求的。"],
+   ["I looked for those opportunities myself","都是我自己主动去找的，"],
+   ["because that's genuinely the kind of work I want to build my career around.","因为这就是我真正想长期做的事情。"]
+  ]],
+
+  ["say","为什么这个项目",[
+   ["There were really two things that attracted me.","真正吸引我的有两点。"],
    "",
-   ["First — this is one of the few projects","第一——这是少数几个"],
-   ["where both sides of my background come together:","能让我两边背景同时用上的项目:"],
-   ["the ecological fieldwork,","生态野外工作,"],
-   ["and using art to engage communities.","和用艺术带动社区参与。"],
+   ["The first is that","第一，"],
+   ["it's one of the few projects","这是少数几个"],
+   ["where both sides of my background come together.","能同时用到我两方面背景的项目。"],
+   ["I can bring the ecological fieldwork,","我可以带来生态野外工作的经验，"],
+   ["but also use art to engage communities.","也可以用艺术去做公众参与。"],
    "",
-   ["Second — the focus on people","第二——它关注的是"],
-   ["who don't normally engage with wildlife.","平时不接触野生动物的人群。"],
-   ["From what I've read,","据我了解,"],
-   ["Boston has a large Eastern European community.","波士顿有很大的东欧社区。"],
-   ["I've worked bilingually before —","我以前做过双语工作——"],
-   ["helping people take part in their own language.","帮人们用自己的语言参与进来。"],
-   ["And I know how much difference that makes.","我知道那能带来多大的不同。"],
+   ["The second is the focus on people","第二，它特别关注"],
+   ["who don't usually engage with wildlife.","那些平时不会主动接触野生动物的人。"],
+   ["From what I've read,","据我了解，"],
+   ["Boston has a large Eastern European community.","Boston 有很大的东欧社区。"],
+   ["I've worked on bilingual projects before,","我以前做过双语项目，"],
+   ["helping people participate in their own language,","帮助大家用自己熟悉的语言参与进来，"],
+   ["and I've seen how much difference that can make.","我知道这会带来多大的改变。"],
    "",
-   ["So it just feels like a natural fit.","所以这感觉就是很自然的契合。"]]],
+   ["So overall,","所以整体来说，"],
+   ["it just feels like a really natural fit.","我觉得这个项目和我的背景真的非常契合。"]
+  ]],
+
   ["hook","钩子",[
-   ["If it's useful, I can talk about how I built","如果有用的话,我可以讲讲我怎么建立起"],
-   ["an art-and-ecology community — and kept it going.","一个艺术+生态的社群——并让它延续下去。"]]],
+   ["If it's useful,","如果有帮助的话，"],
+   ["I'm happy to talk about","我也可以具体讲讲，"],
+   ["how I built an art-and-ecology community","我是怎么建立一个艺术和生态结合的社群，"],
+   ["and kept people coming back after the exhibition ended.","以及怎么让大家在展览结束之后还一直参与。"]
+  ]],
+
   ["backup","后手:若追问波士顿",[
-   ["Boston is really diverse.","波士顿人口非常多元。"],
-   ["And quite a few people","而且有不少人"],
-   ["aren't fully confident using English.","用英语并不完全自信。"],
-   ["So activities need to feel welcoming —","所以活动要让人觉得被欢迎——"],
-   ["not one-size-fits-all.","而不是一刀切。"],
-   ["I've seen the difference it makes","我亲眼见过那种不同:"],
-   ["when people can join in, in their own language.","当人们能用自己的语言参与时。"]]]
- ]},
+   ["From what I've read,","据我了解，"],
+   ["Boston is a really diverse city.","Boston 是一个很多元的城市。"],
+   ["Not everyone feels equally confident using English.","并不是每个人都能很自信地使用英语。"],
+   ["So it's important that activities feel welcoming","所以活动要让人觉得容易参与，"],
+   ["rather than expecting everyone to engage in the same way.","而不是要求所有人都用同一种方式参与。"],
+   ["I've seen that first-hand","我亲眼见过，"],
+   ["when people can take part in their own language,","当人们能够用自己的语言参与时，"],
+   ["they're much more likely to stay involved.","他们会更愿意持续参与。"]
+  ]]
+]},
 {part:"按任职要求(行为题)"},
 {id:"3", key:"社区艺术业绩", pts:[], blocks:[
   ["say","说的一半(一定说)",[
