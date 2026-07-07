@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Froglife 面试速查</title>
+<style>
+  :root{
+    --ink:#20261F; --paper:#F7F6F1; --card:#FFFFFF;
+    --moss:#2E6B3E; --moss-deep:#1E4230;
+    --amber:#A36400; --grey:#6E6E68; --line:#E3E1D8;
+    --p1:#2E6B3E; --p2:#0E6B72; --p3:#6B3E8F;
+    --trackerH:48px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Helvetica Neue","Noto Sans SC",sans-serif}
+  button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+  #tracker{position:fixed;top:0;left:0;right:0;z-index:20;height:var(--trackerH);
+    display:flex;gap:6px;align-items:stretch;padding:7px 10px;background:var(--moss-deep)}
+  #tracker button{flex:1;border-radius:8px;font-size:12.5px;font-weight:600;
+    color:#fff;background:rgba(255,255,255,.14);line-height:1.2}
+  #tracker button.done{background:#4C9A5E;text-decoration:line-through;opacity:.85}
+  #tracker #langbtn{flex:0 0 52px;background:#fff;color:var(--moss-deep);font-weight:800;font-size:14px}
+  #spacer{height:var(--trackerH)}
+
+  #home{padding:14px 14px 40px;max-width:640px;margin:0 auto}
+  #home h1{font-size:20px;font-weight:800;color:var(--moss-deep);margin:6px 2px 2px}
+  #home .sub{font-size:12.5px;color:var(--grey);margin:0 2px 10px}
+  .part{font-size:13px;font-weight:700;color:var(--moss);margin:16px 2px 8px;letter-spacing:.04em}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 10px;text-align:left;font-size:15px;font-weight:650;line-height:1.3;
+    box-shadow:0 1px 2px rgba(32,38,31,.05)}
+  .chip:active{background:#EDF3EE}
+  .chip .n{color:var(--moss);font-weight:800;margin-right:5px}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:5px;vertical-align:1px}
+  .chip.wide{grid-column:1 / -1}
+  .d1{background:var(--p1)} .d2{background:var(--p2)} .d3{background:var(--p3)}
+
+  .ans{display:none;max-width:640px;margin:0 auto;padding-bottom:96px}
+  .ans.show{display:block}
+  #home.hide{display:none}
+  .topbar{position:sticky;top:var(--trackerH);z-index:15;width:100%;text-align:left;
+    background:var(--moss-deep);color:#fff;padding:13px 14px 14px;
+    font-size:16px;font-weight:750;line-height:1.3;display:block}
+  .topbar .back{opacity:.9;font-weight:600;font-size:13.5px;display:block;margin-bottom:3px}
+  .body{padding:12px 16px}
+  .note{font-size:13px;color:var(--grey);font-style:italic;margin:4px 0 10px}
+  .label{font-size:13px;font-weight:800;margin:16px 0 6px;padding:4px 8px;border-radius:6px;display:inline-block}
+  .say .label{color:#fff;background:var(--moss)}
+  .hook .label{color:#fff;background:var(--amber)}
+  .backup .label{color:#fff;background:var(--grey)}
+  .lines{border-left:3px solid var(--line);padding-left:12px}
+  .say .lines{border-color:var(--moss)}
+  .hook .lines{border-color:var(--amber)}
+  .backup .lines{border-color:#C7C5BC;color:#3C4039}
+  .lines p{font-size:18px;line-height:1.5;margin:0}
+  .lines p.gap{height:14px}
+
+  /* 语言模式 */
+  body.m-en .lines p.zh{display:none}
+  body.m-zh .lines p.en{display:none}
+  body.m-both .lines p.zh{font-size:13.5px;color:#8B8B82;line-height:1.4;margin:0 0 7px}
+
+  .navrow{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;gap:1px;
+    background:var(--line);border-top:1px solid var(--line)}
+  .navrow button{flex:1;padding:15px 4px;background:var(--card);font-size:15px;font-weight:700;color:var(--moss-deep)}
+  .navrow button.homebtn{flex:1.2;background:var(--moss);color:#fff;font-size:16px}
+  .navrow button:active{opacity:.8}
+  .navrow button:disabled{color:#BBB}
+
+  @media (min-width:520px){ .grid{grid-template-columns:1fr 1fr 1fr} }
+</style>
+</head>
+<body class="m-en">
+
+<div id="tracker">
+  <button data-tog="0" id="t0">① 科学+艺术</button>
+  <button data-tog="1" id="t1">② 陶瓷+声音</button>
+  <button data-tog="2" id="t2">③ 双语触达</button>
+  <button id="langbtn" data-lang="1">EN</button>
+</div>
+<div id="spacer"></div>
+
+<div id="home"></div>
+<div id="ansWrap"></div>
+
+<script>
+// 行格式: [英文, 中文]  ""=空行
+const DATA = [
+ {part:"开场与核心"},
+ {id:"1", key:"自我介绍", pts:[1], blocks:[
+  ["say","说的一半(一定说)",[
+   ["Hi Rachel, thanks so much for having me.","Hi Rachel,非常感谢你们邀请我。"],
+   ["I'm Emma —","我是 Emma——"],
+   ["an artist, studying Illustration at UAL,","一名艺术家,在 UAL 读插画,"],
+   ["and biology at RMIT.","同时在 RMIT 读生物。"],
+   ["My background is a mix of art,","我的背景是艺术、"],
+   ["wildlife fieldwork, and public engagement.","野外生态工作和公众参与的结合。"],
+   "",
+   ["Over the past year,","过去一年里,"],
+   ["I've spent as much time in the field","我在野外的时间"],
+   ["as in the studio.","和在工作室里一样多。"],
+   ["So I really enjoy sitting between those two worlds.","所以我很享受站在这两个世界之间。"],
+   ["That's why this commission felt like such a good fit.","这也是这个委托让我觉得特别合适的原因。"],
+   "",
+   ["Happy to give examples —","我可以举例子——"],
+   ["from the fieldwork, or the community projects —","野外的,或者社区项目的——"],
+   ["whichever's more useful.","看哪个对你们更有用。"]]],
+  ["backup","后手:具体野外清单",[
+   ["Nightly penguin counts — with Earthcare, in St Kilda.","夜间小企鹅计数——在圣基尔达,跟 Earthcare。"],
+   ["Seagrass and fish surveys — in Victoria.","海草和鱼类调查——在维多利亚州。"],
+   ["And a wading-bird campaign with the RSPB.","还有和 RSPB 做的涉禽宣传活动。"],
+   ["None of these were part of my degree.","这些都不是学位要求的。"],
+   ["I went looking for them —","是我自己找来做的——"],
+   ["because it's the work I actually want to do.","因为这就是我真正想做的工作。"]]]
+ ]},
+ {id:"2", key:"为什么这个项目/是你", pts:[1,3], blocks:[
+  ["say","说的一半(一定说)",[
+   ["Two things attracted me, really.","真正吸引我的有两点。"],
+   "",
+   ["First — this is one of the few projects","第一——这是少数几个"],
+   ["where both sides of my background come together:","能让我两边背景同时用上的项目:"],
+   ["the ecological fieldwork,","生态野外工作,"],
+   ["and using art to engage communities.","和用艺术带动社区参与。"],
+   "",
+   ["Second — the focus on people","第二——它关注的是"],
+   ["who don't normally engage with wildlife.","平时不接触野生动物的人群。"],
+   ["From what I've read,","据我了解,"],
+   ["Boston has a large Eastern European community.","波士顿有很大的东欧社区。"],
+   ["I've worked bilingually before —","我以前做过双语工作——"],
+   ["helping people take part in their own language.","帮人们用自己的语言参与进来。"],
+   ["And I know how much difference that makes.","我知道那能带来多大的不同。"],
+   "",
+   ["So it just feels like a natural fit.","所以这感觉就是很自然的契合。"]]],
+  ["hook","钩子",[
+   ["If it's useful, I can talk about how I built","如果有用的话,我可以讲讲我怎么建立起"],
+   ["an art-and-ecology community — and kept it going.","一个艺术+生态的社群——并让它延续下去。"]]],
+  ["backup","后手:若追问波士顿",[
+   ["Boston is really diverse.","波士顿人口非常多元。"],
+   ["And quite a few people","而且有不少人"],
+   ["aren't fully confident using English.","用英语并不完全自信。"],
+   ["So activities need to feel welcoming —","所以活动要让人觉得被欢迎——"],
+   ["not one-size-fits-all.","而不是一刀切。"],
+   ["I've seen the difference it makes","我亲眼见过那种不同:"],
+   ["when people can join in, in their own language.","当人们能用自己的语言参与时。"]]]
+ ]},
+{part:"按任职要求(行为题)"},
+{id:"3", key:"社区艺术业绩", pts:[], blocks:[
+  ["say","说的一半(一定说)",[
+   ["I think my strongest example is my exhibition,","我觉得我最有代表性的例子就是我的展览，"],
+   ["Hey, Little Bird, How Did You Learn to Fly?.","《Hey, Little Bird, How Did You Learn to Fly?》。"],
+   ["It started as a solo exhibition,","它最开始只是一个个展，"],
+   ["but what happened afterwards was the most meaningful part.","但后面发生的事情才是最有意义的部分。"],
+   "",
+   ["A lot of people came because of the art,","很多人是因为艺术来的，"],
+   ["but we realised we also shared an interest in wildlife and ecology.","但我们发现大家其实也都对野生动物和生态很感兴趣。"],
+   ["We chatted at the private view,","我们在开幕的时候聊天，"],
+   ["people left messages on the comment wall,","也有人在留言墙留言，"],
+   ["and we just stayed in touch afterwards.","后来大家就一直保持联系。"],
+   "",
+   ["Since then,","从那以后，"],
+   ["we've organised birdwatching and sketching sessions around London,","我们会一起在伦敦不同地方观鸟、写生，"],
+   ["and people keep introducing new friends as well.","大家也会带新的朋友一起参加。"],
+   "",
+   ["Looking back,","现在回头看，"],
+   ["that's probably the thing I'm most proud of.","这大概是我最自豪的一件事。"],
+   ["The exhibition didn't just finish when the show ended.","这个展览没有随着展览结束而结束。"],
+   ["It turned into a small community","它慢慢变成了一个小社群，"],
+   ["that people genuinely wanted to come back to.","一个大家真的愿意一直参与下去的社群。"]
+  ]],
+  ["hook","钩子",[
+   ["I can walk you through how a one-off show","我可以讲讲一个一次性的展览"],
+   ["turned into something that kept going.","是怎么变成持续下去的东西的。"]]],
+  ["backup","后手:怎么策展+展后留人",[
+   ["I curated the whole show myself —","整个展览是我自己策划的——"],
+   ["around ecological communication.","围绕生态传播这个主题。"],
+   ["I ran the public events, and the documentation.","公共活动和记录也都是我负责。"],
+   "",
+   ["Afterwards, I kept the group in touch,","展后我让大家保持联系,"],
+   ["and set up a regular activity —","并建立了一个固定活动——"],
+   ["the sketching workshops.","写生工作坊。"],
+   ["So people had a reason to come back,","这样大家就有理由回来,"],
+   ["instead of it ending when the show closed.","而不是展览闭幕就散了。"]]]
+ ]},
+ {id:"4", key:"吸引边缘群体", pts:[3], blocks:[
+  ["say","说的一半(一定说)",[
+   ["Boston, in Lincolnshire, has a very distinct demographic.","林肯郡的波士顿人口结构非常鲜明。"],
+   ["There's a large population of Eastern European","有大量来自东欧的"],
+   ["agricultural and factory workers —","农业和工厂工人——"],
+   ["particularly Polish and Lithuanian communities.","尤其是波兰和立陶宛社区。"],
+   ["Many of these families might never step into a gallery —","这些家庭很多可能从不进画廊——"],
+   ["let alone a wildlife conservation meeting.","更别说野生动物保护的活动了。"],
+   "",
+   ["In one of my student experience roles,","在我的一份 student experience 工作里,"],
+   ["part of my job was pulling together and analysing","我负责整合并分析"],
+   ["student engagement, and attendance.","学生的参与度和出勤数据。"],
+   ["I noticed international students","我注意到国际学生"],
+   ["joined in much less than local students.","参与度比本地学生低很多。"],
+   "",
+   ["I'm bilingual —","我会双语——"],
+   ["so I started chatting with new students","所以我开始用新生自己的语言"],
+   ["in their own language.","跟他们聊天。"],
+   ["During welcome week, for example —","比如在新生迎新周——"],
+   ["helping them register, and collect their student cards,","帮他们完成注册、领学生证,"],
+   ["in a language they already knew,","用他们熟悉的语言,"],
+   ["and walking them into the welcome events.","再带他们参加迎新活动。"],
+   ["You could see them relax straight away,","你能看到他们立刻放松下来,"],
+   ["and become much more willing to join in.","也更愿意参与了。"],
+   "",
+   ["That really stayed with me.","这件事让我印象很深。"],
+   ["Engagement starts with making people","参与感的起点,"],
+   ["feel comfortable and included.","是让人觉得舒服、被接纳。"],
+   ["Sometimes it's about language.","有时候关键是语言。"],
+   ["But more broadly —","但更广义地说——"],
+   ["it's meeting people where they are,","是走到人们所在的地方,"],
+   ["not expecting them to come to you.","而不是等他们来找你。"]]],
+  ["hook","钩子",[
+   ["I've thought about how that would shape","我想过这个原则会怎么塑造"],
+   ["the workshops and the soundscape —","工作坊和声音景观——"],
+   ["happy to go into it.","需要的话我可以展开。"]]],
+  ["backup","后手:为什么不参与+做进声音景观",[
+   ["When we looked into it,","我们了解之后发现,"],
+   ["it wasn't a lack of interest.","不是他们没兴趣。"],
+   ["It's usually a lack of bandwidth, or time —","通常是精力和时间不够——"],
+   ["or the sheer exhaustion","或者纯粹是"],
+   ["of navigating a new environment","用第二语言应付新环境"],
+   ["in a second language.","带来的疲惫。"],
+   "",
+   ["For the sculptures, I'd apply that directly:","做雕塑时我会直接应用这一点:"],
+   ["some workshop sessions in community languages,","部分工作坊用社区语言开展,"],
+   ["and residents' voices in the QR soundscape —","居民的声音放进二维码声音景观——"],
+   ["in Polish and Lithuanian.","用波兰语和立陶宛语。"],
+   ["So the people who feel least included","这样最边缘的人群"],
+   ["can literally hear themselves in the artwork.","能真的在作品里听见自己。"]]]
+ ]},
+ {id:"4b", key:"焦虑参与者+破冰(新)", pts:[3], note:"预判题:工作坊里怎么为容易紧张、脆弱、抵触的参与者营造安全、包容、不评判的环境?有没有一个具体的破冰工具,能快速和不敢开口、不敢拿起工具的人建立信任?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["For me it starts before anyone touches clay.","对我来说,这在任何人碰到陶土之前就开始了。"],
+   ["No skill is ever assumed.","从不预设任何技能门槛。"],
+   ["I never say \u201cmake a frog\u201d.","我不会说\u201c做一只青蛙\u201d。"],
+   ["I say \u201cmake a shape that feels like water\u201d.","我会说\u201c做一个让你想到水的形状\u201d。"],
+   ["There's no wrong answer to that.","这个问题没有错误答案。"],
+   "",
+   ["I also work alongside people, not over them.","而且我是和大家一起做,不是站在旁边指导。"],
+   ["My own first attempts are on the table too —","我自己的第一次尝试也摆在桌上——"],
+   ["including the wonky ones.","包括那些歪歪扭扭的。"],
+   ["When the artist's piece is imperfect,","当艺术家自己的作品也不完美时,"],
+   ["the pressure in the room drops straight away.","房间里的压力立刻就降下来了。"],
+   "",
+   ["And nobody has to share, speak, or be recorded.","没有人必须分享、发言或被录音。"],
+   ["Joining in quietly is a valid way to join in.","安静地参与,也是一种完全成立的参与。"]]],
+  ["backup","后手:具体破冰工具",[
+   ["My go-to icebreaker is a blind clay warm-up.","我最常用的破冰是\u201c盲捏\u201d热身。"],
+   ["Everyone gets a small ball of clay,","每人一小团陶土,"],
+   ["closes their eyes, or hides their hands under the table,","闭上眼睛,或者把手藏到桌下,"],
+   ["and just responds to a sound —","只凭一段声音去捏——"],
+   ["I play a frog call, or running water.","我会放蛙鸣,或者流水声。"],
+   ["One minute. No looking.","一分钟,不许看。"],
+   "",
+   ["Everyone's result is odd — that's the point.","每个人捏出来的都很怪——这正是重点。"],
+   ["You can't be judged for something","没人能因为一件谁都控制不了的事"],
+   ["no one could control.","被评判。"],
+   ["People laugh, compare shapes —","大家会笑,会互相比较——"],
+   ["and the fear of \u201cnot being good at art\u201d","\u201c我不会艺术\u201d的恐惧"],
+   ["is gone before the real making starts.","在正式制作开始前就消失了。"]]]
+ ]},
+ {id:"5", key:"工作坊系列", pts:[2], blocks:[
+  ["say","说的一半(一定说)",[
+   ["One project feels especially relevant —","有一个项目特别相关——"],
+   ["a series of ceramic workshops","一系列陶瓷工作坊,"],
+   ["I designed and ran myself.","从设计到运营都是我自己做的。"],
+   ["People made their own ocarinas.","参与者做自己的陶笛。"],
+   "",
+   ["We met over several sessions,","我们分好几次见面,"],
+   ["and I guided them through the whole process —","我带他们走完整个流程——"],
+   ["from shaping the clay,","从塑形,"],
+   ["to firing the finished pieces.","到烧制成品。"],
+   "",
+   ["When I saw this brief from Froglife, I thought:","看到 Froglife 这份项目简介时我就想:"],
+   ["\u201cI've done something really similar before.\u201d","\u201c我做过几乎一样的事。\u201d"],
+   ["Installations, participation, sound —","装置、参与、声音——"],
+   ["it all felt very familiar.","全都非常熟悉。"]]],
+  ["hook","钩子",[
+   ["I can go into how I ran the sessions, if that helps.","我可以讲讲我怎么带工作坊——如果有帮助的话。"]]],
+  ["say","演示网页(过渡台词)",[
+   ["Let me show you something — here it is.","我给你们看个东西——就是这个。"],
+   ["This is an early proposal I put together,","这是我根据项目简介"],
+   ["based on the brief.","做的一个初步预案。"],
+   ["I've made ocarinas before —","我以前做过陶笛——"],
+   ["including some frog-shaped ones —","包括一些青蛙造型的——"],
+   ["so I brought those ideas together here.","所以我把这些整合到了一起。"],
+   ["We can come back to this later.","我们可以稍后再回来看。"]]],
+  ["backup","后手:一对一+烧制流程",[
+   ["In each session, I briefly introduce","每节课我会先简单介绍"],
+   ["how the ocarina works,","陶笛的发声原理,"],
+   ["then help people tune their ocarinas, one-to-one,","然后一对一帮大家调音,"],
+   ["until they actually make a sound.","直到真的能吹响。"],
+   ["It's surprisingly fiddly.","这其实特别考验细节。"],
+   ["But seeing someone's face at that first note —","但看到有人吹响第一个音时的表情——"],
+   ["that's my favourite moment.","那是我最喜欢的时刻。"],
+   "",
+   ["After the workshops,","工作坊结束后,"],
+   ["I organised all the pieces,","我整理好所有作品,"],
+   ["liaised with the studio about firing,","对接工作室安排烧制,"],
+   ["and returned the finished ocarinas to everyone.","再把成品陶笛还给每个人。"],
+   ["So I coordinated the whole thing, end to end.","所以整个流程我是从头到尾统筹的。"]]]
+ ]},
+ {id:"6", key:"制作/找厂商(薄弱)", pts:[], note:"策略:①转化视角——承认规模是新挑战,立刻强调陶瓷材质专业度如何延伸;②明确分工——你把控设计/共创/声音,厂商负责结构/地基/防翻倒;③流程把控——用图纸和小样(maquette)向厂商传达需求,与项目经理做安全与预算评估;④生态功能——咨询生态专家,确保冬眠营材质结构100%安全、透气、防潮。", blocks:[
+  ["say","说的一半(一定说)",[
+   ["To be completely transparent —","完全坦诚地说——"],
+   ["this would be my first permanent,","这会是我第一件永久性的"],
+   ["large-scale outdoor piece.","大型户外作品。"],
+   ["So I see my role as the creative director,","所以我把自己的角色定位为创作总监"],
+   ["and project facilitator.","和项目协调者。"],
+   "",
+   ["My strength is in the materials —","我的强项在材料——"],
+   ["especially ceramics.","尤其是陶瓷。"],
+   ["That's the community ocarinas,","也就是社区陶笛"],
+   ["and the mosaic surface.","和马赛克表面。"],
+   ["Glazed properly, ceramic is naturally","上好釉的陶瓷本身就"],
+   ["weatherproof, and durable.","防风雨、耐久。"],
+   "",
+   ["For structural safety, the load-bearing base,","而结构安全、承重底座"],
+   ["and public installation standards,","和公共安装标准,"],
+   ["I'd actively liaise with specialist contractors —","我会主动对接专业制作方——"],
+   ["exactly as the person spec outlines.","正如职位说明里写的那样。"]]],
+  ["hook","钩子",[
+   ["I can walk you through my three-phase process,","我可以讲讲我的三阶段流程,"],
+   ["or a maker-sourcing example — if you'd like.","或者一个找厂商打样的例子。"]]],
+  ["backup","后手:三阶段流程",[
+   ["My practical process, in three phases.","我的实际流程分三个阶段。"],
+   ["Phase one — detailed 3D designs,","第一阶段——细化的 3D 设计,"],
+   ["and small clay maquettes,","加上小尺寸的陶土模型,"],
+   ["based on the community workshops.","以社区工作坊的成果为基础。"],
+   "",
+   ["Phase two — use those to get precise quotes,","第二阶段——拿着它们去获取精确报价"],
+   ["and technical feedback,","和技术反馈,"],
+   ["from local steel and concrete fabricators.","来自本地的钢构和混凝土制作方。"],
+   ["Anti-vandal, and safe for children.","要防破坏,并对儿童安全。"],
+   "",
+   ["Phase three — work hand-in-hand with your PM,","第三阶段——和你们的项目经理紧密协作,"],
+   ["so the toad hibernaculum uses materials","确保蟾蜍越冬巢的材料"],
+   ["that are non-toxic, breathable,","无毒、透气、"],
+   ["and ecologically sound —","生态上可靠——"],
+   ["before anything goes in the ground.","然后才让任何东西落地安装。"],
+   "",
+   ["By separating the artistic co-creation","把艺术共创"],
+   ["from the heavy fabrication,","和重型制作分开,"],
+   ["I can deliver on time, on budget,","我就能按时、按预算交付,"],
+   ["and to the highest safety standard.","并达到最高安全标准。"]]],
+  ["backup","后手:雕塑协作+原型方法",[
+   ["For one sculpture project,","有一个雕塑项目,"],
+   ["I developed the design myself,","设计是我自己做的,"],
+   ["then worked alongside an experienced sculptor","制作时我跟着一位"],
+   ["during fabrication.","有经验的雕塑家一起工作。"],
+   ["She showed me cold casting, and welding.","她教了我冷铸和焊接。"],
+   ["When practical issues came up,","遇到实际问题时,"],
+   ["we adjusted the design together.","我们一起调整设计。"],
+   "",
+   ["I haven't made a permanent outdoor piece before —","我没做过永久性户外作品——"],
+   ["I wouldn't pretend I have.","这点我不会假装。"],
+   ["But I'm used to learning new methods by making.","但我习惯在制作中学新方法。"],
+   ["I start with small prototypes,","我会先做小样,"],
+   ["test, find what isn't working,","测试、找出问题,"],
+   ["then refine before the final piece.","再改进,最后做成品。"],
+   ["That's exactly the process I'd bring here.","这正是我会带到这个项目里的流程。"]]]
+ ]},
+ {id:"7", key:"按时按预算", pts:[], blocks:[
+  ["say","说的一半(一定说)",[
+   ["A couple of examples feel relevant.","有两个例子挺相关的。"],
+   "",
+   ["For my solo exhibition,","我的个展,"],
+   ["I managed the whole process end to end.","整个流程是我从头到尾管理的。"],
+   ["It opened exactly on schedule —","它准时开幕了——"],
+   ["even though the kiln firing","尽管窑烧环节"],
+   ["was partly out of my control.","有一部分我控制不了。"],
+   ["So I had to plan around those constraints.","所以我必须围绕这些限制来排计划。"],
+   "",
+   ["I've also budgeted smaller projects —","我也给小项目做过预算——"],
+   ["breaking the work down","把工作拆成"],
+   ["into hours, and material costs.","工时和材料成本。"],
+   ["That way I could plan realistically,","这样就能在时间和预算内"],
+   ["within the time and the budget.","做出现实的计划。"],
+   "",
+   ["So yes — I'm comfortable with timelines and budgets,","所以是的——时间线和预算我都能把控,"],
+   ["even when some parts depend on other people.","即使有些环节要依赖别人。"]]],
+  ["hook","钩子",[
+   ["I can walk through how I keep things on schedule","我可以讲讲当一部分环节不受控时,"],
+   ["when parts are out of my control.","我怎么保证整体不延期。"]]],
+  ["backup","后手:具体方法",[
+   ["My method: map everything in Notion, at the start.","我的方法:一开始就在 Notion 里排出全部任务。"],
+   ["Schedule around the fixed things first —","先围绕不可动的环节排——"],
+   ["for the exhibition, that was the kiln dates.","个展时就是窑烧日期。"],
+   ["Then fit the flexible tasks around them.","再把灵活的任务填进去。"],
+   "",
+   ["For budgets: estimate realistic hours for each part,","预算方面:给每部分估算现实的工时,"],
+   ["and cost from there.","再据此计算成本。"],
+   ["That keeps the quote honest,","这样报价是实在的,"],
+   ["and the spend predictable.","花费也可预测。"]]]
+ ]},
+ {id:"7b", key:"冬季时间线+应急(新)", pts:[], note:"预判题:合同2026年9月–2027年2月,6个月完成12场工作坊、共创、对接制作方、安装两件雕塑。林肯郡秋冬严酷:低温大雨影响户外出席,也影响混凝土养护和地基开挖。问:时间线怎么排?天气打乱了怎么办?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["My starting point: plan backwards from the weather.","我的出发点:倒着从天气排计划。"],
+   ["Anything that needs the ground —","所有要动土的环节——"],
+   ["the excavation, the foundations, the hibernaculum —","开挖、地基、越冬巢——"],
+   ["happens early, in autumn,","都放在早期、秋天做,"],
+   ["while conditions still allow.","趁条件还允许。"],
+   "",
+   ["The workshops are ceramics-based,","工作坊以陶瓷为主,"],
+   ["so they're indoor by nature.","本质上就是室内活动。"],
+   ["I'd book warm community venues in advance —","我会提前订好温暖的社区场地——"],
+   ["halls, libraries, schools —","礼堂、图书馆、学校——"],
+   ["so winter weather can't cancel them.","这样冬天的天气取消不了它们。"],
+   "",
+   ["Fabrication happens off-site, over winter,","制作在场外进行,贯穿冬季,"],
+   ["indoors, unaffected by the weather.","在室内,不受天气影响。"],
+   ["Then the final install is short —","最后的安装时间很短——"],
+   ["mostly assembly, in a weather window,","主要是组装,挑一个天气窗口,"],
+   ["with buffer time built in.","并预留缓冲时间。"]]],
+  ["backup","后手:三个具体应急",[
+   ["Three specific back-ups.","三个具体的后备方案。"],
+   ["Every outdoor session has an indoor twin —","每场户外活动都有室内替代版——"],
+   ["same date, same content, moved inside.","同一天、同样内容,搬到室内。"],
+   "",
+   ["All concrete and groundwork is done by late autumn,","混凝土和土建在深秋前全部完成,"],
+   ["so nothing structural depends on January.","结构环节完全不押在一月份。"],
+   "",
+   ["And the schedule keeps two spare weeks free —","日程里留出两周机动——"],
+   ["so one bad month doesn't break the plan.","一个糟糕的月份不至于打乱全局。"],
+   ["If the install slips, the sculpture is finished and stored —","如果安装延误,雕塑已完工入库——"],
+   ["only the final fixing waits for the window.","只有最后的固定等天气窗口。"]]]
+ ]},
+ {id:"8", key:"两爬热情", pts:[1], blocks:[
+  ["say","说的一半(一定说)",[
+   ["This is something I've ended up","这其实是我后来"],
+   ["caring about quite a lot.","非常在意的一件事。"],
+   "",
+   ["On my own initiative,","我主动做了"],
+   ["I built a public frog-distribution map,","一个公开的蛙类分布地图,"],
+   ["for the frogs living in the city.","记录生活在城市里的青蛙。"],
+   ["Nobody asked me to.","没有人要求我做。"],
+   ["I just wanted that data to reach people","我只是想让这些数据触达"],
+   ["who'd never normally go looking for it.","那些平时根本不会去找它的人。"],
+   ["And honestly, even I was surprised —","而且说实话,连我自己都很惊讶——"],
+   ["by how close frogs live to our everyday lives.","青蛙离我们的日常生活这么近。"],
+   "",
+   ["My connection to amphibians is quite practical —","我和两栖动物的联系很实在——"],
+   ["it comes from the fieldwork I've done.","来自我做过的野外工作。"],
+   ["There's one night survey","有一次夜间调查"],
+   ["that really captures why it matters to me.","特别能说明它为什么对我重要。"],
+   ["Happy to tell you about it.","愿意的话我可以讲讲。"]]],
+  ["backup","后手:夜里找蛙的故事(最有画面感)",[
+   ["One night, a friend and I","有一天晚上,我和朋友"],
+   ["followed frog calls along the wetland edge.","沿着湿地边缘循着蛙鸣找。"],
+   ["It took nearly two hours","花了将近两个小时"],
+   ["to find the first frog —","才找到第一只蛙——"],
+   ["with just a weak torch.","手里只有一支很弱的手电。"],
+   "",
+   ["I can barely picture it now.","它长什么样我现在几乎想不起来了。"],
+   ["But I still remember the sound, exactly.","但那个声音我记得一清二楚。"],
+   ["Something so small","那么小的一个生命,"],
+   ["pulled two people out into the dark.","把两个人拽进了黑夜里。"],
+   "",
+   ["That feeling is what I'd want the sculptures","我希望这两件雕塑带给人们的,"],
+   ["to give people —","就是这种感觉——"],
+   ["about their own local wildlife.","对他们身边野生动物的感觉。"]]]
+ ]},
+ {id:"8b", key:"扭转两爬印象(新)", pts:[1], note:"预判题:青蛙蟾蜍不像毛茸茸的动物那样讨喜,有人觉得\u201c黏糊糊\u201d或根本注意不到。你打算怎么用插画背景扭转波士顿公众的看法?怎么让居民尤其是孩子对蟾蜍产生好奇和联结?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["Honestly — I think \u201cslimy\u201d is a looking problem.","说实话——\u201c黏糊糊\u201d其实是\u201c没好好看过\u201d的问题。"],
+   ["People find frogs unappealing","人们觉得青蛙不讨喜,"],
+   ["because they've never really looked at one.","是因为从没认真看过一只。"],
+   ["Illustration is exactly the tool for that.","插画正是解决这个的工具。"],
+   ["It slows people down, and makes them look.","它让人慢下来,真正去看。"],
+   "",
+   ["With kids, I wouldn't start with \u201cprotect amphibians\u201d.","对孩子,我不会从\u201c保护两栖动物\u201d讲起。"],
+   ["I'd start with drawing one —","我会从画一只开始——"],
+   ["the gold ring in a toad's eye,","蟾蜍眼睛里那圈金色,"],
+   ["the way a frog's throat moves when it calls.","青蛙鸣叫时喉咙的起伏。"],
+   ["Once you've drawn something,","一旦你画过一样东西,"],
+   ["you can't find it ugly anymore.","你就没法再觉得它丑了。"],
+   ["You notice it. You start to care.","你会注意到它,开始在意它。"],
+   "",
+   ["And the ocarinas help too —","陶笛也在帮忙——"],
+   ["a frog you made, that sings in your hand,","一只你亲手做的、在掌心歌唱的青蛙,"],
+   ["is very hard to call slimy.","很难再被叫作\u201c黏糊糊\u201d。"]]],
+  ["backup","后手:波士顿的具体做法",[
+   ["Concretely, in Boston:","具体到波士顿:"],
+   ["illustrated species cards of the local pond life —","本地池塘物种的插画卡片——"],
+   ["characterful, accurate, and bilingual.","有性格、够准确、双语。"],
+   ["A drawing moment inside every workshop.","每场工作坊里都有一个画画环节。"],
+   ["And the sculptures themselves as friendly characters —","雕塑本身也是亲切的角色——"],
+   ["designed with the community,","和社区一起设计,"],
+   ["so they feel like neighbours, not monuments.","让它们像邻居,而不是纪念碑。"]]]
+ ]},
+ {part:"概念与现实问题"},
+ {id:"9", key:"雕塑概念", pts:[2], note:"这题例外:可以说饱满一点。概念说完停下,\u201c怎么落地\u201d留后手。", blocks:[
+  ["say","说的一半(一定说)",[
+   ["Now I'd love to share my early thinking","现在我想讲讲我对工作坊的"],
+   ["on the workshops.","初步设想。"],
+   ["The photos here are from my own past work —","这里的照片都是我过去做的——"],
+   ["and there's a short video,","还有一段短视频,"],
+   ["so you can hear the sound.","可以听到声音。"],
+   "",
+   ["My starting idea for the twelve workshops","我对十二场工作坊的初步想法"],
+   ["is to pair observation with making.","是把观察和制作配对。"],
+   ["In the morning, we go out and observe —","上午出去观察——"],
+   ["the frogs, the pond, whatever catches you.","青蛙、池塘、任何吸引你的东西。"],
+   ["In the afternoon, in the workshop,","下午回到工作坊,"],
+   ["you turn what you saw into your own ocarina —","把你看到的做成属于你的陶笛——"],
+   ["or whatever connects you to the water.","或任何你觉得连接你和水的东西。"],
+   "",
+   ["I'd keep the brief deliberately broad —","任务书我会刻意保持宽泛——"],
+   ["to guide people, not to limit them.","去引导参与者,而不是限制他们。"],
+   ["Because I've always believed","因为我一直相信,"],
+   ["the real design should come from the community,","真正的设计应该来自社区,"],
+   ["not from me.","而不是来自我。"],
+   "",
+   ["And if participants are happy,","如果参与者愿意,"],
+   ["their pieces feed into the final sculptures.","他们的作品会被用到最终雕塑里。"],
+   "",
+   ["It's called \u201cVoices of the Water\u201d.","它叫\u201cVoices of the Water\u201d(水之声)。"],
+   ["Two pond-side sculptures,","两件池塘边的雕塑,"],
+   ["shaped from local amphibians.","以本地两栖动物为造型。"],
+   ["The surface is made of ceramic pieces —","表面由陶瓷片组成——"],
+   ["each one made by a participant.","每一片都由一位参与者制作。"],
+   ["Some are working ocarinas —","其中一些是真能吹响的陶笛——"],
+   ["so the sculpture literally makes sound.","所以雕塑真的会发声。"],
+   "",
+   ["A real toad hibernaculum is built into the base.","底座里嵌着一个真实的蟾蜍越冬巢。"],
+   ["So it doesn't just symbolise habitat —","它不只是象征栖息地——"],
+   ["it is one.","它本身就是栖息地。"],
+   "",
+   ["And a QR soundscape:","还有一个二维码声音景观:"],
+   ["the ponds' own frog choruses,","池塘自己的蛙鸣合唱,"],
+   ["layered with residents' voices —","叠上居民的声音——"],
+   ["deliberately in community languages.","特意用社区语言。"]]],
+  ["hook","钩子",[
+   ["I can go deeper on the workshops,","我可以深入讲工作坊,"],
+   ["or the sound design —","或者声音设计——"],
+   ["whichever's more useful to you.","看哪个对你们更有用。"]]],
+  ["backup","后手:喂给雕塑/户外耐久/声音采集",[
+   ["Across the twelve workshops,","在十二场工作坊里,"],
+   ["each participant makes a ceramic piece —","每位参与者做一片陶瓷——"],
+   ["their own link to the water.","代表自己和水的联系。"],
+   ["Those pieces become the sculpture's surface.","这些陶片会成为雕塑的表面。"],
+   ["So the community literally builds it,","所以雕塑真的是社区亲手建的,"],
+   ["and I hold the overall form together.","我负责把整体形态统合起来。"],
+   "",
+   ["For the outdoor build:","户外建造方面:"],
+   ["specialist fabricators,","由专业制作方,"],
+   ["a weatherproof, vandal-resistant structure,","做防风雨、防破坏的结构,"],
+   ["ceramics safely mounted.","陶瓷安全固定。"],
+   ["And the hibernaculum built to a spec","越冬巢按生态团队认可的"],
+   ["the ecology team is happy with.","规格建造。"],
+   "",
+   ["For the soundscape:","声音景观方面:"],
+   ["record the ponds' own frog choruses,","录下池塘自己的蛙鸣,"],
+   ["gather short spoken memories from residents —","收集居民简短的口述记忆——"],
+   ["including community languages —","包括社区语言——"],
+   ["all linked through the QR code.","全部通过二维码串联。"]]]
+ ]},
+ {id:"9b", key:"声音景观:采集+编织(新)", pts:[2], note:"预判题:QR声音景观混合蛙鸣和多语言口述历史,音频有力但难做好。问:12场工作坊里怎么实际采集录音?怎么让普通居民放松开口?创作和技术上,怎么把人声和自然声编织成有叙事感的整体,而不是素材堆砌?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["I'd make recording part of the making —","我会让录音成为制作的一部分——"],
+   ["not a separate, formal event.","而不是一个单独、正式的环节。"],
+   ["While people's hands are busy with clay,","当人们的手忙着捏陶土时,"],
+   ["they talk.","他们会聊天。"],
+   ["That's when the real stories come out.","真正的故事就是那时候出来的。"],
+   "",
+   ["So I'd record short, informal conversations","所以我会在工作坊里录下"],
+   ["in the workshop, with clear consent —","简短、随意的对话,并明确征得同意——"],
+   ["rather than sitting people in front of a mic.","而不是让人正襟危坐地对着麦克风。"],
+   "",
+   ["And for people less confident in English —","对英语不太自信的人——"],
+   ["they speak in their own language.","就用自己的语言说。"],
+   ["Polish, Lithuanian — whatever feels natural.","波兰语、立陶宛语——怎么自然怎么来。"],
+   ["That's exactly the point of the piece.","这正是这件作品的意义所在。"]]],
+  ["backup","后手:声音怎么编织",[
+   ["On the sound design side:","声音设计方面:"],
+   ["I'd record the ponds through the seasons —","我会跨季节录下池塘——"],
+   ["frog chorus, water, wind.","蛙鸣、水声、风声。"],
+   ["The frog chorus becomes the base layer,","蛙鸣作为底层,"],
+   ["like a rhythm section.","像节奏声部。"],
+   ["Single human voices sit on top,","人声单独浮在上面,"],
+   ["one at a time, with space around them.","一次一个,留出呼吸的空间。"],
+   "",
+   ["Short fragments, not full interviews —","用短片段,不用完整访谈——"],
+   ["so it feels composed, not collected.","让它听起来是作曲,不是素材合集。"],
+   ["And the ocarina notes from the workshops","工作坊里的陶笛音"],
+   ["bridge the two worlds —","正好连接两个世界——"],
+   ["a sound that's human-made, but animal-like.","一种人做出来的、却像动物的声音。"]]]
+ ]},
+ {id:"9c", key:"互动 vs 栖息地(新)", pts:[], note:"预判题:公共艺术点位人来人往还有狗,但蟾蜍越冬巢9月–2月需要安静、黑暗、潮湿、不被打扰。问:扫码触摸的互动性和栖息地的安静要求怎么平衡?怎么防干扰 and 破坏,同时向公众科普它们的存在?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["The key is zoning — vertical zoning, really.","关键在分区——其实是垂直分区。"],
+   ["Everything interactive lives up top:","所有互动都在上面:"],
+   ["the ceramics, the QR points,","陶瓷、二维码点位、"],
+   ["the parts you're meant to touch.","设计给人触摸的部分。"],
+   "",
+   ["The hibernaculum sits down in the base —","越冬巢在底座深处——"],
+   ["sealed from human access,","人碰不到,"],
+   ["opening away from the path,","入口背向步道,"],
+   ["into planting, on the quiet side.","朝向种植带、安静的一侧。"],
+   "",
+   ["So people interact with the sculpture —","所以人们互动的是雕塑——"],
+   ["never with the habitat.","永远不是栖息地本身。"],
+   ["The toads get dark, damp, and undisturbed.","蟾蜍得到黑暗、潮湿、不被打扰。"],
+   ["People get the story of what's underneath.","人们得到的是\u201c脚下有什么\u201d的故事。"]]],
+  ["backup","后手:细节+灵活备份",[
+   ["Details I'd work through with your ecologists:","我会和你们的生态团队敲定的细节:"],
+   ["entrances angled away from footfall,","入口偏离人流方向,"],
+   ["screened by planting;","用种植遮挡;"],
+   ["no openings people can poke things into;","没有任何能让人塞东西的开口;"],
+   ["a solid, vandal-proof casing round the chamber.","巢室外围是坚固防破坏的壳体。"],
+   "",
+   ["And the QR content does the educating —","科普交给二维码内容——"],
+   ["\u201cthere are toads sleeping under here\u201d —","\u201c这下面有蟾蜍在冬眠\u201d——"],
+   ["so curiosity is satisfied by the phone,","好奇心用手机满足,"],
+   ["not by lifting or prodding.","而不是靠翻动或戳探。"],
+   "",
+   ["And if the ecology team felt the site was too busy,","如果生态团队觉得点位太热闹,"],
+   ["the hibernaculum can sit a few metres away —","越冬巢可以挪到几米之外——"],
+   ["linked by design, not physically attached.","在设计上呼应,而不是物理相连。"]]]
+ ]},
+ {id:"9d", key:"共创方向跑偏(新)", pts:[], note:"预判题:如果12场工作坊里社区把创作方向带到完全意外的地方——想做完全不同的动物,或提出和\u2018Voices of the Water\u2019不搭的视觉风格,怎么办?怎么既守住Froglife的生物和安全要求,又真心尊重社区创意、不把自己的想法强加给他们?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["I'd actually welcome that —","说实话,我会欢迎这种情况——"],
+   ["it means people feel real ownership.","它说明大家有了真正的主人感。"],
+   "",
+   ["My way of handling it is to be honest about the frame,","我的处理方式是从第一场工作坊开始,"],
+   ["right from workshop one.","就把框架讲清楚。"],
+   ["Some things are fixed, and I'd say so openly:","有些东西是定死的,我会坦白说:"],
+   ["it's an amphibian commission,","这是一个两栖动物主题的委托,"],
+   ["it has to be safe, and durable,","它必须安全、耐久,"],
+   ["and there's a real habitat in the base.","底座里有一个真实的栖息地。"],
+   ["That's the brief we're all working inside.","这就是我们所有人共同的任务书。"],
+   "",
+   ["But inside that frame — everything can move.","但框架之内——一切都可以变。"],
+   ["The species, the pose, the style, the colours,","物种、姿态、风格、颜色、"],
+   ["the stories in the soundscape —","声音景观里的故事——"],
+   ["that's genuinely theirs to shape.","这些真正由他们来塑造。"],
+   "",
+   ["In my experience, people don't resent a clear frame.","以我的经验,大家不反感清晰的框架。"],
+   ["They resent a hidden one.","他们反感的是被隐藏的框架。"]]],
+  ["backup","后手:怎么引导而不强加",[
+   ["Practically, my role is translation — not veto.","实际操作上,我的角色是翻译,不是否决。"],
+   ["If someone proposes something outside the frame,","如果有人提出框架之外的想法,"],
+   ["I ask what they love about it —","我会先问他们喜欢它哪一点——"],
+   ["because the reason usually holds the good idea.","因为好点子往往藏在理由里。"],
+   ["A child who wants a dragon","一个想做龙的孩子,"],
+   ["usually wants scales, drama, and wings —","想要的通常是鳞片、气势和翅膀——"],
+   ["a great crested newt can carry two of those.","冠欧螈就能满足其中两样。"],
+   "",
+   ["And I keep decisions visible:","而且我让决策过程可见:"],
+   ["ideas go on the wall, grouped, voted on —","想法上墙、分组、投票——"],
+   ["so the final form is traceable to the group,","让最终形态能追溯到集体,"],
+   ["not to my private taste.","而不是我的个人口味。"],
+   ["That's how you guide without forcing:","这就是引导而不强加的方法:"],
+   ["clear boundaries, open process, shared decisions.","清晰的边界、公开的过程、共同的决定。"]]]
+ ]},
+ {id:"9e", key:"工作坊记录(新)", pts:[], note:"预判题:12场工作坊怎么边做边记录?怎么捕捉参与者的故事、创作进展和突破时刻,让我们有丰富的素材展示给资方?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["I'd build documentation into the sessions —","我会把记录内建到每场活动里——"],
+   ["not bolt it on afterwards.","而不是事后补拍。"],
+   ["I ran all the documentation for my own exhibition,","我的个展记录全程是我自己做的,"],
+   ["so I have a working system already.","所以我已经有一套跑通的方法。"],
+   "",
+   ["Each workshop gets the same simple kit:","每场工作坊用同一套简单流程:"],
+   ["photos of hands and work — not just faces,","拍手和作品——不只是拍脸,"],
+   ["a short voice note from one participant,","请一位参与者录一段简短语音,"],
+   ["and one line in my project journal:","以及项目日志里的一句话:"],
+   ["what changed today.","今天发生了什么变化。"],
+   "",
+   ["The audio does double duty —","这些录音一材两用——"],
+   ["the same recordings feed the soundscape,","既喂给声音景观,"],
+   ["and the funder story.","也构成给资方的故事。"],
+   "",
+   ["By the end, that's twelve chapters:","到最后,这就是十二个章节:"],
+   ["pieces progressing, voices accumulating,","作品在推进,声音在累积,"],
+   ["and the sculpture literally growing, week by week.","雕塑一周一周真实地长出来。"]]],
+  ["backup","后手:给资方的细节",[
+   ["For funders specifically:","专门针对资方:"],
+   ["consent sorted on day one, in community languages —","第一天就用社区语言办好授权——"],
+   ["so everything captured is usable.","这样拍到的所有素材都能用。"],
+   ["Before-and-after pairs:","前后对照:"],
+   ["a person's first clay shape,","一个人的第一团陶土,"],
+   ["next to their fired ocarina.","放在他烧成的陶笛旁边。"],
+   ["Breakthrough moments logged the same day,","突破时刻当天记录,"],
+   ["while the quote is still fresh.","趁原话还新鲜。"],
+   "",
+   ["And a short monthly digest to the project manager —","另外每月给项目经理一页简报——"],
+   ["so Heritage Fund reporting is ready as we go,","遗产基金的汇报边走边成型,"],
+   ["not reconstructed at the end.","而不是最后再回头拼凑。"]]]
+ ]},
+ {id:"9f", key:"评估项目成效(新)", pts:[], note:"预判题:怎么实际评估项目成功?怎么衡量和追踪与雕塑互动的人是否真的对波士顿本地野生动物有了更多理解和更深的欣赏?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["I'd measure it in layers —","我会分层来衡量——"],
+   ["because appreciation doesn't show up in one number.","因为\u201c欣赏\u201d不会体现在一个数字里。"],
+   "",
+   ["During the project, the numbers are easy:","项目期间,数据很直接:"],
+   ["attendance across twelve workshops,","十二场工作坊的出席人数、"],
+   ["return rate — do people come back —","回头率——大家会不会再来——"],
+   ["and how many pieces make it into the sculpture.","以及多少作品最终进入雕塑。"],
+   "",
+   ["After installation, the QR code is the quiet hero.","安装之后,二维码是隐形的功臣。"],
+   ["Every scan is a data point:","每一次扫码都是一个数据点:"],
+   ["how many, when, which languages people choose.","多少次、什么时间、大家选了哪种语言。"],
+   ["That's a live measure of engagement —","这是一个实时的参与度指标——"],
+   ["running for years, at zero cost.","零成本,持续运转好几年。"],
+   "",
+   ["And for depth — one simple question,","至于深度——一个简单的问题,"],
+   ["asked before, and after:","项目前后各问一次:"],
+   ["\u201cname a creature that lives in your local pond.\u201d","\u201c说出一种住在你家附近池塘里的动物。\u201d"],
+   ["If the answers get richer, we've moved something.","如果答案变丰富了,我们就真的改变了什么。"]]],
+  ["backup","后手:更多工具",[
+   ["A few more tools I'd suggest:","再补充几个工具:"],
+   ["a comment wall, at workshops and at the unveiling —","留言墙,工作坊和揭幕式都放——"],
+   ["I used one at my exhibition, and it works.","我个展用过,很有效。"],
+   ["Short voice feedback inside the soundscape recordings.","声音采集时顺带收集简短的语音反馈。"],
+   ["Counting repeat visitors with Froglife's team.","和 Froglife 团队一起统计回访人数。"],
+   "",
+   ["And a light \u201cone year on\u201d check:","还有一个轻量的\u201c一年后\u201d回访:"],
+   ["do local schools still use the sculptures","本地学校还会不会把雕塑"],
+   ["as a teaching stop?","当作教学点?"],
+   ["That's the real test of appreciation —","这才是\u201c欣赏\u201d的真正检验——"],
+   ["not what people say at the unveiling,","不是揭幕式上大家说了什么,"],
+   ["but whether they keep coming back.","而是他们会不会一直回来。"]]]
+ ]},
+ {id:"10", key:"不在波士顿本地", pts:[], blocks:[
+  ["say","直接说(短)",[
+   ["I'm not Boston-based.","我不住在波士顿。"],
+   ["But I understand the role is delivered on-site,","但我了解这个角色是在特定时段"],
+   ["during set periods.","现场交付的。"],
+   ["I'm completely willing and able","我完全愿意、也完全能够"],
+   ["to travel and stay","在工作坊和安装阶段"],
+   ["for the workshop and installation phases.","过去驻留。"],
+   ["I've already planned for that —","我已经提前做了安排——"],
+   ["so this won't be an issue on my side.","所以这在我这边不会是问题。"]]],
+  ["backup","后手:时间完全自由",[
+   ["One more practical point —","再补充一个实际情况——"],
+   ["I start my placement year in September.","我九月开始我的实习年(placement year)。"],
+   ["So my time is completely flexible —","所以我的时间是完全自由的——"],
+   ["I can plan it entirely around the commission.","可以完全围绕这个委托来安排。"]]]
+ ]},
+ {id:"11", key:"化解交付风险", pts:[], blocks:[
+  ["say","主动说一次(短)",[
+   ["I know a publicly-installed, Heritage-funded piece","我知道一件公共安装、遗产基金资助的作品"],
+   ["has to meet a high, safe standard.","必须达到高标准、安全的水平。"],
+   ["So I'd de-risk it like this:","所以我会这样化解风险:"],
+   ["I hold the creative and community side.","我把住创作和社区这一侧。"],
+   ["Specialist fabricators, and the project manager,","专业制作方和项目经理"],
+   ["handle the durable build.","负责耐久建造。"],
+   ["That way the community-led vision stays intact —","这样社区主导的愿景保持完整——"],
+   ["and the final piece is genuinely built","最终作品也真正达到"],
+   ["to an installable standard.","可安装的标准。"]]]
+ ]},
+ {id:"11b", key:"现有网络+长期守护(新)", pts:[], note:"预判题:这是2025年8月–2027年7月的两年项目。你2026年9月入职时,Jenny's Wood池塘修复已完成,RSPB Frampton Marsh栖息地已建成,学校和志愿者网络已建立——你不是空降到真空里。问:怎么借力这些现有网络丰富你的12场工作坊?合同2027年2月结束但雕塑是永久的,怎么让志愿者和学校产生长期守护感,让雕塑在你离开后依然被照看、被喜爱?", blocks:[
+  ["say","说的一半(一定说)",[
+   ["That's honestly one of the best parts of this brief —","说实话,这是这个项目最好的地方之一——"],
+   ["I'm not starting cold.","我不是从零开始。"],
+   "",
+   ["For the workshops, I'd go where trust already exists.","工作坊方面,我会去信任已经存在的地方。"],
+   ["The Jenny's Wood volunteers know those ponds —","Jenny's Wood 的志愿者最了解那些池塘——"],
+   ["I'd invite them in as local experts,","我会请他们以本地专家的身份加入,"],
+   ["not just participants:","而不只是普通参与者:"],
+   ["leading the pond-side observation,","带领池塘边的观察环节,"],
+   ["sharing what the restoration changed.","讲讲修复前后的变化。"],
+   "",
+   ["And the schools already in your curriculum","已经在你们课程网络里的学校,"],
+   ["are a ready-made route to families —","是通往家庭的现成路径——"],
+   ["a workshop through a school reaches parents too.","通过学校办工作坊,家长也会被带进来。"],
+   "",
+   ["People trust an invitation","人们信任的是"],
+   ["from someone they already know.","来自熟人的邀请。"],
+   ["So I'd rather work through your networks","所以我宁愿借你们的网络,"],
+   ["than build my own from scratch, in six months.","也不想在六个月里从零建自己的。"]]],
+  ["backup","后手:长期守护怎么设计",[
+   ["For the long term —","长期来看——"],
+   ["ownership is designed in, not asked for.","守护感是设计出来的,不是求来的。"],
+   ["Hundreds of local hands make the surface.","雕塑表面出自几百双本地人的手。"],
+   ["People protect what they made.","人会保护自己亲手做的东西。"],
+   "",
+   ["Concretely:","具体来说:"],
+   ["a school adoption scheme —","一个学校\u201c认养\u201d机制——"],
+   ["one class checks the sculptures each season,","一个班级每季度看一次雕塑,"],
+   ["as part of their existing visits.","嵌进他们本来就有的外出活动里。"],
+   ["A simple care guide, left with Froglife","一份简单的养护手册,留给 Froglife"],
+   ["and the volunteers —","和志愿者们——"],
+   ["what to look at, who to call.","看什么、出问题找谁。"],
+   ["And the QR soundscape can keep growing —","二维码声音景观也可以继续生长——"],
+   ["new voices added after I'm gone,","我离开后还能加入新的声音,"],
+   ["so it stays alive, not archived.","让它活着,而不是被封存。"],
+   "",
+   ["My best evidence: my exhibition community","我最好的证据:我个展聚起来的社群,"],
+   ["still meets, long after the show closed.","在展览闭幕很久之后仍在活动。"],
+   ["I design endings so they don't end.","我设计结尾的方式,就是让它不真正结束。"]]]
+ ]},
+ {id:"12", key:"DBS / Safeguarding", pts:[], blocks:[
+  ["say","直接说(短)",[
+   ["Absolutely.","当然没问题。"],
+   ["I'm very happy to complete a DBS check,","我非常乐意完成 DBS 审查,"],
+   ["and follow any safeguarding training","并遵循 Froglife 要求的"],
+   ["and procedures Froglife requires.","任何保护培训和流程。"]]]
+ ]},
+ {id:"13", key:"你的反问(2–3个)", pts:[], blocks:[
+  ["say","问题一",[
+   ["How much of the final form","最终形态有多大程度"],
+   ["is genuinely shaped by the community —","真正由社区塑造——"],
+   ["versus a fixed brief?","多大程度是既定的?"],
+   ["How do you balance that in practice?","实际操作中你们怎么平衡?"]]],
+  ["say","问题二",[
+   ["What does success look like to you —","对你们来说,雕塑安装一年后,"],
+   ["a year after the sculptures are installed?","什么样才算成功?"]]],
+  ["say","问题三",[
+   ["Could the sculptures tie into","雕塑能不能和实际的"],
+   ["the actual pond-restoration work?","池塘修复工作结合?"],
+   ["How closely would I work with the ecology side?","我和生态团队的合作会有多紧密?"],
+   ["I also noticed Froglife is hiring","另外我注意到 Froglife 还在招"],
+   ["for a few other roles on this project —","这个项目的其他几个岗位——"],
+   ["managers, and interns.","经理和实习生。"],
+   ["Would I be working alongside them at all?","我会和他们有协作吗?"]]]
+ ]},
+ {id:"14", key:"收尾(补落地点)", pts:[], blocks:[
+  ["say","直接说",[
+   ["That's all from me now.","我这边的问题就这些了。"],
+   ["Thank you so much —","非常感谢——"],
+   ["I've really enjoyed this conversation.","这次对话我真的很享受。"],
+   ["It genuinely feels like the project","这真的感觉像是我所有技能"],
+   ["my skills were building towards.","一直在为之积累的那个项目。"],
+   ["And I'd love to bring it to life","我很希望能和波士顿社区一起"],
+   ["with the Boston community.","把它做出来。"],
+   ["Hope to see you soon!","希望很快能再见!"]]],
+  ["backup","补落地点③(如果还没说到)",[
+   ["One last thing I'd add —","最后我想补充一点——"],
+   ["reaching Boston's less-engaged communities,","用他们自己的语言,"],
+   ["in their own language,","触达波士顿参与度低的社群,"],
+   ["is the part I'd be most committed to.","是我最想投入的部分。"]]]
+ ]},
+ {part:"附录 — 可能被问的题"},
+ {id:"A1", key:"最大短板/失败", pts:[], blocks:[
+  ["say","直接说",[
+   ["I work across a lot of fields.","我跨很多领域工作。"],
+   ["So my instinct is to take on too much myself.","所以我的本能是自己揽太多。"],
+   ["I've learned to map dependencies early,","我学会了尽早理清依赖关系,"],
+   ["and be honest about what I can't do alone.","并坦诚哪些我一个人做不了。"],
+   ["That's why I over-communicate in a team now.","所以现在在团队里我宁可多沟通。"]]]
+ ]},
+ {id:"A2", key:"为何不选更资深的", pts:[], blocks:[
+  ["say","直接说",[
+   ["You could find a more experienced fabricator.","你们能找到制作经验更丰富的人。"],
+   ["But very few artists bring all three:","但很少有艺术家同时具备三样:"],
+   ["genuine ecological fieldwork,","真实的生态野外经验、"],
+   ["real community-engagement instinct,","真正的社区参与直觉、"],
+   ["and the ceramics-and-sound skills","以及这份简介正好需要的"],
+   ["this exact brief needs.","陶瓷+声音技能。"],
+   ["And I'd partner with specialist fabricators","建造环节,"],
+   ["for the build.","我会和专业制作方合作。"],
+   ["So you get the fresh combination —","所以你们既得到新鲜的组合——"],
+   ["and the delivery.","也得到可靠的交付。"]]]
+ ]},
+ {id:"A3", key:"做过永久户外作品?", pts:[], blocks:[
+  ["say","直接说",[
+   ["Not permanent outdoor work yet —","永久户外作品还没做过——"],
+   ["I'll be honest about that.","这点我坦诚。"],
+   ["My plan: hold the creative and community vision,","我的方案:把住创作和社区愿景,"],
+   ["and bring in specialist fabricators, and the PM,","请专业制作方和项目经理"],
+   ["for the durable, safe install.","负责耐久、安全的安装。"],
+   ["That's how I'd close that gap responsibly —","这是负责任地补上短板的方式——"],
+   ["rather than pretend it away.","而不是假装它不存在。"]]]
+ ]},
+ {id:"A4", key:"低出席/难缠参与者", pts:[], blocks:[
+  ["say","直接说",[
+   ["For low turnout —","出席率低的话——"],
+   ["meet people where they already are.","去人们已经在的地方。"],
+   ["Partner with local community spaces,","和本地社区空间合作,"],
+   ["and run sessions in their own language.","用他们的语言办活动。"],
+   "",
+   ["For a difficult participant —","遇到难缠的参与者——"],
+   ["stay calm, keep the group's tone steady.","保持冷静,稳住整组的氛围。"],
+   ["I've had to do that","这在高压的野外环境里"],
+   ["in high-pressure field situations.","我经历过。"]]]
+ ]},
+ {id:"A5", key:"健康安全/风险评估", pts:[], blocks:[
+  ["say","直接说",[
+   ["I take that seriously.","这一点我很重视。"],
+   ["Fieldwork taught me why risk assessments,","野外工作让我明白,出发前"],
+   ["and weather calls, matter —","风险评估和天气判断"],
+   ["before you ever set out.","有多重要。"],
+   ["I'd follow Froglife's procedures closely,","我会严格遵循 Froglife 的流程,"],
+   ["and lean on the project manager","现场的具体要求"],
+   ["for the site-specific requirements.","则依靠项目经理。"]]]
+ ]},
+ {id:"A6", key:"社区想法与你冲突?", pts:[], blocks:[
+  ["say","直接说",[
+   ["Then the community's ideas win —","那就社区的想法赢——"],
+   ["within what's safe, and buildable.","在安全、可建造的范围内。"],
+   ["My job is to hold a coherent form","我的工作是维持一个连贯的形态,"],
+   ["that carries their contributions,","承载他们的贡献,"],
+   ["not to impose my own design.","而不是强加我自己的设计。"],
+   ["Honestly — that tension is usually","说实话——最好的作品"],
+   ["where the best work comes from.","往往正是从这种张力里来的。"]]]
+ ]},
+ {id:"A7", key:"如何接受批评", pts:[], blocks:[
+  ["say","直接说",[
+   ["Well — my whole approach here","嗯——我在这个项目里的整个思路"],
+   ["is that the community shapes the work.","就是让社区塑造作品。"],
+   ["So feedback isn't a threat.","所以反馈不是威胁。"],
+   ["It's the raw material.","它是原材料。"],
+   ["I actively want it.","我主动想要它。"]]]
+ ]},
+ {id:"A8", key:"自由职业/自我管理", pts:[], blocks:[
+  ["say","直接说",[
+   ["Yes — I already work project to project.","可以——我已经在按项目制工作了。"],
+   ["I quote my own work,","我自己报价,"],
+   ["and manage my timelines in Notion.","用 Notion 管理自己的时间线。"],
+   ["I'm used to being self-directed.","我习惯自我驱动。"],
+   ["And I'd stay in close contact with the PM —","而且我会和项目经理保持紧密联系——"],
+   ["so I'm never working in isolation.","不会陷入孤立工作。"]]]
+ ]},
+ {id:"A9", key:"和学业怎么平衡", pts:[], blocks:[
+  ["say","直接说",[
+   ["The commission runs on set days,","这个委托是按固定天数进行的,"],
+   ["not full-time.","不是全职。"],
+   ["And it lines up with my placement year.","而且正好和我的实习年对上。"],
+   ["So it fits alongside my studies —","所以它和学业是并行的——"],
+   ["it doesn't compete with them.","不冲突。"],
+   ["I've planned around the start date.","我已经围绕开始日期做了规划。"]]]
+ ]},
+ {id:"A10", key:"日薪 / VAT", pts:[], blocks:[
+  ["say","直接说",[
+   ["The advertised day rate works well for me.","公布的日薪对我来说合适。"],
+   ["As a student, VAT wouldn't apply on my side.","作为学生,我这边不涉及 VAT。"],
+   ["I'd want to agree the number of days,","我想提前和你们敲定天数,"],
+   ["and the materials budget,","以及材料预算,"],
+   ["clearly upfront with you.","都清清楚楚约定好。"]]]
+ ]},
+ {id:"A11", key:"保险 / 注册", pts:[], blocks:[
+  ["say","直接说",[
+   ["I'd make sure I'm properly set up","我会确保自己按合同要求"],
+   ["for the contract.","把手续办妥。"],
+   ["Happy to sort public liability insurance,","很乐意办好公众责任险,"],
+   ["and whatever registration is needed.","以及任何需要的注册。"],
+   ["I'd check the exact requirements with you.","具体要求我会和你们确认。"]]]
+ ]},
+ {id:"A12", key:"了解 Boston & Beyond?", pts:[], blocks:[
+  ["say","直接说",[
+   ["I know it's a two-year","我知道这是一个为期两年的"],
+   ["habitat-and-community project.","栖息地+社区项目。"],
+   ["It's already restored ponds at Jenny's Wood,","已经修复了 Jenny's Wood 的池塘,"],
+   ["and created new ones","并在 RSPB Frampton Marsh"],
+   ["at RSPB Frampton Marsh, and Freiston Shore.","和 Freiston Shore 新建了池塘。"],
+   ["Plus wildlife-gardening workshops,","还有野生动物园艺工作坊"],
+   ["and volunteer days.","和志愿者日。"],
+   ["The sculptures are the public-art strand —","雕塑是其中的公共艺术线——"],
+   ["tying all that work back to the community.","把这些工作和社区重新连起来。"]]]
+ ]},
+ {id:"A13", key:"为何 Froglife 不是艺术机构", pts:[], blocks:[
+  ["say","直接说",[
+   ["Because for me, the ecology isn't a backdrop.","因为对我来说,生态不是背景板。"],
+   ["It's the point.","它就是重点。"],
+   ["I want the art to actually do conservation work —","我希望艺术真的在做保护工作——"],
+   ["like building a real habitat into the sculpture.","比如把真实栖息地做进雕塑里。"],
+   ["Froglife is one of the very few places","Froglife 是极少数"],
+   ["where that combination is the whole brief,","把这种结合当成任务本身的地方,"],
+   ["not an add-on.","而不是附加项。"]]]
+ ]},
+];
+
+// ===== 渲染 =====
+const qs = DATA.filter(d=>d.id);
+const home = document.getElementById('home');
+const ansWrap = document.getElementById('ansWrap');
+
+let h = '<h1>Froglife 面试速查</h1><p class="sub">点题目看答案 · 绿色横条/底部按钮返回 · 右上角切换 EN/中/双语</p>';
+let grid = false;
+for(const d of DATA){
+  if(d.part){ if(grid){h+='</div>';grid=false;} h+='<div class="part">'+d.part+'</div><div class="grid">'; grid=true; continue; }
+  const dots = (d.pts||[]).map(p=>'<span class="dot d'+p+'"></span>').join('');
+  const wide = d.key.length>9 ? ' wide':'';
+  h+='<button class="chip'+wide+'" data-open="'+d.id+'"><span class="n">'+d.id+'</span>'+d.key+dots+'</button>';
+}
+if(grid)h+='</div>';
+home.innerHTML=h;
+
+let a='';
+qs.forEach((d,i)=>{
+  a+='<div class="ans" id="q'+d.id+'">';
+  a+='<button class="topbar" data-back="1"><span class="back">\u2039 返回全部题目</span>'+d.id+'. '+d.key+'</button>';
+  a+='<div class="body">';
+  if(d.note)a+='<p class="note">'+d.note+'</p>';
+  for(const [type,label,lines] of d.blocks){
+    a+='<div class="'+type+'"><span class="label">'+label+'</span><div class="lines">';
+    for(const l of lines){
+      if(l==='') a+='<p class="gap"></p>';
+      else a+='<p class="en">'+l[0]+'</p><p class="zh">'+l[1]+'</p>';
+    }
+    a+='</div></div>';
+  }
+  a+='</div><div class="navrow">';
+  a+= i===0 ? '<button disabled>\u2039 上一题</button>' : '<button data-open="'+qs[i-1].id+'">\u2039 '+qs[i-1].id+'</button>';
+  a+='<button class="homebtn" data-back="1">全部题目</button>';
+  a+= i===qs.length-1 ? '<button disabled>下一题 \u203a</button>' : '<button data-open="'+qs[i+1].id+'">'+qs[i+1].id+' \u203a</button>';
+  a+='</div></div>';
+});
+ansWrap.innerHTML=a;
+
+// ===== 交互 =====
+let scrollPos=0, current=null;
+const MODES=[['m-en','EN'],['m-zh','中'],['m-both','双']];
+let mode=0;
+
+function show(id){
+  if(current) document.getElementById('q'+current).classList.remove('show');
+  if(id){
+    if(!current) scrollPos = window.scrollY || document.documentElement.scrollTop;
+    home.classList.add('hide');
+    document.getElementById('q'+id).classList.add('show');
+    window.scrollTo(0,0);
+  } else {
+    home.classList.remove('hide');
+    window.scrollTo(0,scrollPos);
+  }
+  current = id;
+}
+
+document.addEventListener('click', function(e){
+  const t = e.target.closest('[data-open],[data-back],[data-tog],[data-lang]');
+  if(!t) return;
+  if(t.dataset.lang){
+    mode=(mode+1)%3;
+    document.body.className=MODES[mode][0];
+    t.textContent=MODES[mode][1];
+    return;
+  }
+  if(t.dataset.tog !== undefined){ t.classList.toggle('done'); return; }
+  if(t.dataset.open){
+    try{ location.hash = 'q-'+t.dataset.open; }catch(_){ }
+    show(t.dataset.open);
+  } else {
+    try{ if(location.hash){ history.back(); return; } }catch(_){ }
+    show(null);
+  }
+});
+
+window.addEventListener('hashchange', function(){
+  const m = location.hash.match(/^#q-(.+)$/);
+  const id = m ? m[1] : null;
+  if(id && document.getElementById('q'+id)) show(id);
+  else show(null);
+});
+</script>
+</body>
+</html>
