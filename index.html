@@ -91,7 +91,7 @@
 // 行格式: [英文, 中文]  ""=空行
 const DATA = [
  {part:"开场与核心"},
- {id:"1", key:"自我介绍", pts:[1], blocks:[
+ {id:"1", key:"自我介绍/为什么这个项目/是你", pts:[1], blocks:[
   ["say","说的一半(一定说)",[
    ["Hi Rachel, thanks so much for having me.","Hi Rachel,非常感谢你们邀请我。"],
    ["I'm Emma —","我是 Emma——"],
@@ -117,8 +117,7 @@ const DATA = [
    ["I went looking for them —","是我自己找来做的——"],
    ["because it's the work I actually want to do.","因为这就是我真正想做的工作。"]]]
  ]},
- {id:"2", key:"为什么这个项目/是你", pts:[1,3], blocks:[
-  ["say","说的一半(一定说)",[
+  
    ["Two things attracted me, really.","真正吸引我的有两点。"],
    "",
    ["First — this is one of the few projects","第一——这是少数几个"],
@@ -150,35 +149,29 @@ const DATA = [
  {part:"按任职要求(行为题)"},
  {id:"3", key:"社区艺术业绩", pts:[], blocks:[
   ["say","说的一半(一定说)",[
-   ["My strongest example is my exhibition —","我最有力的例子是我的展览——"],
-   ["Hey Little Bird.","Hey Little Bird。"],
-   ["It started as a solo show.","它一开始只是个个展。"],
-   ["But the surprise was what happened afterwards.","但意外的是之后发生的事。"],
+   ["I think my strongest example is my exhibition,","我觉得我最有代表性的例子就是我的展览，"],
+   ["Hey, Little Bird, How Did You Learn to Fly?.","《Hey, Little Bird, How Did You Learn to Fly?》。"],
+   ["It started as a solo exhibition,","它最开始只是一个个展，"],
+   ["but what happened afterwards was the most meaningful part.","但后面发生的事情才是最有意义的部分。"],
    "",
-   ["A lot of visitors shared an interest","很多观众"],
-   ["in both art and ecology —","同时喜欢艺术和生态——"],
-   ["at the private view, and on the comment wall —","在开幕预展上,也在留言墙上——"],
-   ["so we stayed in touch.","所以我们保持了联系。"],
-   ["Since then, we've been running","从那以后,我们一直在伦敦各地"],
-   ["birdwatching and sketching sessions around London.","组织观鸟和写生活动。"],
+   ["A lot of people came because of the art,","很多人是因为艺术来的，"],
+   ["but we realised we also shared an interest in wildlife and ecology.","但我们发现大家其实也都对野生动物和生态很感兴趣。"],
+   ["We chatted at the private view,","我们在开幕的时候聊天，"],
+   ["people left messages on the comment wall,","也有人在留言墙留言，"],
+   ["and we just stayed in touch afterwards.","后来大家就一直保持联系。"],
    "",
-   ["Looking back, that's what I'm most proud of.","回头看,这是我最骄傲的地方。"],
-   ["It didn't end with the exhibition.","它没有随展览结束。"],
-   ["It became a community","它变成了一个"],
-   ["people wanted to keep coming back to.","大家愿意一直回来的社群。"]]],
+   ["Since then,","从那以后，"],
+   ["we've organised birdwatching and sketching sessions around London,","我们会一起在伦敦不同地方观鸟、写生，"],
+   ["and people keep introducing new friends as well.","大家也会带新的朋友一起参加。"],
+   "",
+   ["Looking back,","现在回头看，"],
+   ["that's probably the thing I'm most proud of.","这大概是我最自豪的一件事。"],
+   ["The exhibition didn't just finish when the show ended.","这个展览没有随着展览结束而结束。"],
+   ["It turned into a small community","它慢慢变成了一个小社群，"],
+   ["that people genuinely wanted to come back to.","一个大家真的愿意一直参与下去的社群。"]
+  ]],
   ["hook","钩子",[
-   ["I can walk you through how a one-off show","我可以讲讲一个一次性的展览"],
-   ["turned into something that kept going.","是怎么变成持续下去的东西的。"]]],
-  ["backup","后手:怎么策展+展后留人",[
-   ["I curated the whole show myself —","整个展览是我自己策划的——"],
-   ["around ecological communication.","围绕生态传播这个主题。"],
-   ["I ran the public events, and the documentation.","公共活动和记录也都是我负责。"],
-   "",
-   ["Afterwards, I kept the group in touch,","展后我让大家保持联系,"],
-   ["and set up a regular activity —","并建立了一个固定活动——"],
-   ["the sketching workshops.","写生工作坊。"],
-   ["So people had a reason to come back,","这样大家就有理由回来,"],
-   ["instead of it ending when the show closed.","而不是展览闭幕就散了。"]]]
+ 
  ]},
  {id:"4", key:"吸引边缘群体", pts:[3], blocks:[
   ["say","说的一半(一定说)",[
